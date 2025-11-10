@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Scrapbook of Us: Happy Birthday, My Love!</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffeef8, #e6f7ff);
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .cherry-blossom {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0.7; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        .heart-float {
+            position: absolute;
+            font-size: 1.2rem;
+            opacity: 0.4;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        #landing {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        #landing h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #d81b60;
+            margin-bottom: 1rem;
+            opacity: 0;
+        }
+        #landing p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            opacity: 0;
+        }
+        .scrapbook {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+        .page {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            position: relative;
+            overflow: hidden;
+        }
+        .page img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .page img:hover {
+            transform: scale(1.02);
+        }
+        .page h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #c51162;
+            margin-bottom: 1rem;
+        }
+        .page p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .secret {
+            display: none;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            color: #fff;
+            padding: 1rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            font-style: italic;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        #final {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            margin: 4rem auto;
+            max-width: 800px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            opacity: 0;
+        }
+        #final h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: #d81b60;
+            margin-bottom: 1rem;
+        }
+        #final p {
+            font-size: 1.4rem;
+            line-height: 1.8;
+        }
+        @media (max-width: 768px) {
+            #landing h1 { font-size: 2.5rem; }
+            .page h2 { font-size: 2rem; }
+            .page img { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="landing">
+        <h1>A Scrapbook of Us: Happy Birthday, My Love!</h1>
+        <p>To the one who makes my world so special, this is a digital scrapbook of us. Every moment with you has been my favorite. Happy Birthday, my love! 💖 - Your Fiancé</p>
+    </div>
+
+    <div class="scrapbook"></div>
+
+    <div id="final">
+        <h3>One Last Surprise For You 💕</h3>
+        <p>I’m so grateful for every moment we’ve shared. I can’t wait to see what the future holds for us. Happy Birthday, my love! I’ll always cherish you. Love, Your Fiancé 💖</p>
+    </div>
+
+    <script>
+        // FIXED PHOTO DATA (the error was here!)
+        const photos = [
+            { src: 'https://i.postimg.cc/rKgT05s2/Snapchat-402196700.jpg', caption: 'Our First Date ❤️', emoji: '❤️', text: 'From the moment we met, I knew you were someone special. Our first date was magical, filled with nervous smiles, and it’s still one of my favorite memories. 💕', secret: 'I’ll never forget how my heart raced when I saw you for the first time. You’ve had me since then. 💖' },
+            { src: 'https://i.postimg.cc/Th02mzNj/Snapchat-3646907.jpg', caption: 'Laughing Together 😊', emoji: '😊', text: 'We’ve laughed together so many times that I’ve lost count. But every time you laugh, it feels like the world is a little brighter.', secret: 'Remember that time we couldn\'t stop laughing over [inside joke]? That was priceless!' },
+            { src: 'https://i.postimg.cc/Dm6fs9p6/Snapchat-393943813.jpg', caption: 'Adventures Await 🌍', emoji: '🌍', text: 'Our travels together have been some of the best experiences of my life. I can’t wait to see where we’ll go next, but I already know that wherever we go, it’ll be amazing as long as we’re together.', secret: 'Let’s go on even crazier adventures this year, my travel buddy! ✈️💫' },
+            { src: 'https://i.postimg.cc/tsCX22wT/Snapchat-1929877852.jpg', caption: 'Sunset Kisses 🌅', emoji: '🌅', text: 'There’s something so magical about the quiet moments we share, especially when we’re watching the sunset together. Those moments feel like time stands still, just for us.', secret: 'Your kiss at sunset? It’s the most peaceful thing in the world.' },
+            { src: 'https://i.postimg.cc/ygPKmRjd/Snapchat-1108494090.jpg', caption: 'Forever & Always 💍', emoji: '💍', text: 'From the moment we decided to spend forever together, I’ve been filled with nothing but joy. You are my forever, my always.', secret: 'Forever with you is my favorite place to be.' },
+            { src: 'https://i.postimg.cc/mzw4Y9jr/Snapchat-1165123826.jpg', caption: 'Silly Moments 🤪', emoji: '🤪', text: 'You make me laugh harder than anyone else. From silly faces to goofy moments, life with you is always full of laughter.', secret: 'You’re the only one I’ll do embarrassing things with. 🤣' },
+            { src: 'https://i.postimg.cc/DJghrG60/Snapchat-1224438465.jpg', caption: 'Dreaming Big ✨', emoji: '✨', text: 'Together, we’ve started dreaming big. Every day with you feels like a new chapter waiting to be written. I can’t wait to see what our future holds.', secret: 'With you by my side, I know all of our dreams are within reach.' },
+            { src: 'https://i.postimg.cc/TL9xVb0r/Snapchat-1508117308.jpg', caption: 'Our Happy Place 🏠', emoji: '🏠', text: 'Our home, wherever we are, feels like the happiest place in the world. It’s not the walls or the roof, but the love we share that makes it perfect.', secret: 'You are my home, and wherever we go, it will always feel like our happy place.' },
+            { src: 'https://i.postimg.cc/8JHGRv4R/Snapchat-1583915127.jpg', caption: 'Love in Every Glance 👀', emoji: '👀', text: 'Sometimes, words aren’t enough. A glance, a look, a smile—those are the moments when I know everything is right in the world.', secret: 'Your eyes hold the world. I get lost in them every time.' },
+            { src: 'https://i.postimg.cc/TL9xVb0j/Snapchat-1691933428.jpg', caption: 'You Are My World 🌎', emoji: '🌎', text: 'You are my everything. I don’t need anything else when I have you by my side. You are my world, my universe.', secret: 'My whole universe revolves around you, and it always will.' },
+            { src: 'https://i.postimg.cc/dkBF2C6F/Snapchat-445044777.jpg', caption: 'Eternally Yours ❤️', emoji: '❤️', text: 'You are my heart, my love, my soul. I will love you, eternally.', secret: 'Eternally yours, now and forever.' },
+            { src: 'https://i.postimg.cc/sQczYWmg/Snapchat-773267508.jpg', caption: 'Together Forever ♾️', emoji: '♾️', text: 'Together forever. This is just the beginning of our journey, and I can’t wait to keep writing this love story with you.', secret: 'Together, we’re unstoppable. Here’s to forever!' }
+        ];
+
+        // Create cherry blossoms
+        function createBlossom() {
+            const blossom = document.createElement('div');
+            blossom.className = 'cherry-blossom';
+            blossom.innerHTML = '🌸';
+            blossom.style.left = Math.random() * 100 + 'vw';
+            blossom.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(blossom);
+            setTimeout(() => blossom.remove(), 10000);
+        }
+        setInterval(createBlossom, 300);
+
+        // Floating hearts
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart-float';
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = Math.random() * 100 + 'vh';
+            document.body.appendChild(heart);
+        }
+
+        // Landing animation
+        gsap.to("#landing h1", { opacity: 1, y: -20, duration: 1.5, delay: 0.5 });
+        gsap.to("#landing p", { opacity: 1, y: -20, duration: 1.5, delay: 1 });
+
+        // Build pages
+        const scrapbook = document.querySelector('.scrapbook');
+        photos.forEach((photo, index) => {
+            const page = document.createElement('div');
+            page.className = 'page';
+            page.innerHTML = `
+                <h2>${photo.caption}</h2>
+                <img src="${photo.src}" alt="${photo.caption}" onclick="toggleSecret(this)">
+                <p>${photo.text}</p>
+                <div class="secret">✨ ${photo.secret} ✨</div>
+            `;
+            scrapbook.appendChild(page);
+
+            gsap.to(page, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                scrollTrigger: { trigger: page, start: "top 80%" }
+            });
+        });
+
+        // Final page
+        gsap.to("#final", { opacity: 1, scale: 1, duration: 1.5, scrollTrigger: { trigger: "#final", start: "top 80%" } });
+
+        // Toggle secret
+        function toggleSecret(img) {
+            const secret = img.nextElementSibling.nextElementSibling;
+            secret.style.display = secret.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Auto-scroll after 3 sec
+        setTimeout(() => {
+            document.querySelector('.scrapbook').scrollIntoView({ behavior: 'smooth' });
+        }, 3000);
+    </script>
+</body>
+</html>
